@@ -85,7 +85,8 @@
     window.THREE = THREE;
   </script>
   <!-- 8th Wall 오픈소스 엔진 바이너리 (SLAM + 이미지타깃) -->
-  <script async src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js"></script>
+  <!-- data-preload-chunks="slam": 엔진이 SLAM 청크(xr-slam.js)를 미리 로드해야 XR8.XrController가 채워짐 -->
+  <script async src="https://cdn.jsdelivr.net/npm/@8thwall/engine-binary@1/dist/xr.js" data-preload-chunks="slam"></script>
 
   <script>
   // ===== 보정 상수 (폰에서 틀어지면 여기만 조정) =====
@@ -129,7 +130,7 @@
       gl_FragColor=vec4(col, clamp(glow,0.0,0.98));
     }`;
 
-  let uniforms, anchorObj, t0=0, revealStart=0, tracking=false, targetJson=null;
+  let uniforms, anchorObj, mesh, t0=0, revealStart=0, tracking=false, targetJson=null;
 
   // ===== 8th Wall 파이프라인 모듈 =====
   const glowPipelineModule = () => {
@@ -142,6 +143,10 @@
       anchorObj.quaternion.copy(detail.rotation);
       const s = detail.scale * SCALE_MULT;
       anchorObj.scale.set(s, s, s);
+      // 엔진이 주는 타깃 실제 종횡비로 평면을 맞춤(하드코딩 대신) → 카드에 딱 맞춤
+      const sw = detail.scaledWidth || 1, sh = detail.scaledHeight || 1;
+      if (mesh) mesh.scale.set(sw, sh, 1);
+      uniforms.uAspect.value = sw / sh;
     };
     const lose = ({detail}) => {
       if (detail.name !== TARGET_NAME || !anchorObj) return;
@@ -154,8 +159,8 @@
         const { scene } = XR8.Threejs.xrScene();
         const mat = new THREE.ShaderMaterial({ vertexShader:vert, fragmentShader:frag, uniforms,
           transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, depthTest:false });
-        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, PLANE_ASPECT), mat);
-        mesh.rotation.x = EXTRA_ROT_X;            // 카드 평면 보정(필요시 -PI/2 등)
+        mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);  // 종횡비는 추적 시 detail.scaledWidth/Height로 맞춤
+        mesh.rotation.x = EXTRA_ROT_X;            // 이미지타깃은 detail.rotation이 평면을 정렬 → 기본 0
         anchorObj = new THREE.Group();            // detail(위치/회전/스케일)을 받는 앵커
         anchorObj.add(mesh);
         anchorObj.visible = false;
