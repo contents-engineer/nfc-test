@@ -1,0 +1,23 @@
+{
+  "imagePath": "image-targets/munyang_luminance.png",
+  "metadata": null,
+  "name": "munyang",
+  "type": "PLANAR",
+  "properties": {
+    "left": 128,
+    "top": 0,
+    "width": 768,
+    "height": 1024,
+    "isRotated": true,
+    "originalWidth": 1024,
+    "originalHeight": 1024
+  },
+  "resources": {
+    "originalImage": "munyang_original.png",
+    "croppedImage": "munyang_cropped.png",
+    "thumbnailImage": "munyang_thumbnail.png",
+    "luminanceImage": "munyang_luminance.png"
+  },
+  "created": 1781773887495,
+  "updated": 1781773887495
+}
