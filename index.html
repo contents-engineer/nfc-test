@@ -198,8 +198,17 @@
     } catch (e) { showError('AR 시작 실패: ' + (e && e.message ? e.message : e)); }
   }
 
-  // THREE + XR8 모두 준비되면 시작
-  function whenReady(cb){ (function p(){ (window.THREE && window.XR8) ? cb() : setTimeout(p,60); })(); }
+  // XR8 하위 모듈(XrController 등)은 'xrloaded' 이후 비동기로 채워짐(초기엔 null).
+  // → window.XR8 존재가 아니라 실제 모듈이 준비됐는지 폴링한다.
+  function whenReady(cb){
+    let waited = 0;
+    (function p(){
+      const X = window.XR8;
+      if (window.THREE && X && X.GlTextureRenderer && X.Threejs && X.XrController) return cb();
+      if ((waited += 60) > 12000) return showError('AR 엔진 로드 시간 초과(XR8 모듈 미준비). 새로고침 후 다시 시도해 주세요.');
+      setTimeout(p, 60);
+    })();
+  }
 
   $('#startBtn').addEventListener('click', async () => {
     try {
