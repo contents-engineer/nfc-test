@@ -194,6 +194,7 @@
       t0 = performance.now();
       const canvas = $('#camerafeed');
       XR8.addCameraPipelineModules([
+        XR8.FullWindowCanvas.pipelineModule(),   // 캔버스를 창 전체로 + 종횡비 보정 → 작은화면·짜부 해결
         XR8.GlTextureRenderer.pipelineModule(),
         XR8.Threejs.pipelineModule(),
         XR8.XrController.pipelineModule(),
