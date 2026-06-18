@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <rect width="1000" height="1000" fill="#f1ece2"/>
+
+  <!-- 비대칭 프레임 틱 (코너 추적용) -->
+  <g fill="#141414">
+    <rect x="60" y="60" width="120" height="14"/>
+    <rect x="60" y="60" width="14" height="90"/>
+    <rect x="250" y="60" width="14" height="46"/>
+    <rect x="330" y="60" width="14" height="70"/>
+    <rect x="60" y="300" width="46" height="14"/>
+    <rect x="60" y="420" width="70" height="14"/>
+    <rect x="880" y="80" width="60" height="14"/>
+    <rect x="926" y="80" width="14" height="120"/>
+    <rect x="900" y="900" width="40" height="14"/>
+    <rect x="926" y="820" width="14" height="94"/>
+  </g>
+
+  <!-- 메인 비대칭 링 + 동심 -->
+  <g fill="none" stroke="#141414">
+    <circle cx="560" cy="430" r="300" stroke-width="7"/>
+    <circle cx="560" cy="430" r="232" stroke-width="3"/>
+    <circle cx="560" cy="430" r="150" stroke-width="2"/>
+    <path d="M 290 360 A 300 300 0 0 1 470 168" stroke-width="14"/>
+    <path d="M 820 560 A 300 300 0 0 1 640 712" stroke-width="14"/>
+  </g>
+
+  <!-- 다이얼 틱 (회전 게이지) -->
+  <g stroke="#141414" stroke-width="4">
+    <line x1="560" y1="120" x2="560" y2="150"/>
+    <line x1="690" y1="150" x2="678" y2="178"/>
+    <line x1="788" y1="245" x2="763" y2="262"/>
+    <line x1="406" y1="160" x2="420" y2="187"/>
+    <line x1="318" y1="250" x2="342" y2="268"/>
+    <line x1="262" y1="368" x2="292" y2="378"/>
+  </g>
+
+  <!-- 중심 아퍼처 (눈/렌즈) -->
+  <circle cx="560" cy="430" r="92" fill="#f1ece2" stroke="#141414" stroke-width="6"/>
+  <circle cx="560" cy="430" r="60" fill="#c0341d"/>
+  <circle cx="560" cy="430" r="26" fill="#141414"/>
+  <circle cx="548" cy="416" r="9" fill="#f1ece2"/>
+
+  <!-- 교차 라인 + 노드 -->
+  <g stroke="#141414" stroke-width="4">
+    <line x1="120" y1="780" x2="880" y2="300"/>
+    <line x1="200" y1="250" x2="760" y2="820"/>
+  </g>
+  <g fill="#1f49b6">
+    <rect x="300" y="612" width="26" height="26" transform="rotate(45 313 625)"/>
+    <rect x="612" y="300" width="22" height="22" transform="rotate(45 623 311)"/>
+    <circle cx="470" cy="470" r="11"/>
+  </g>
+
+  <!-- 비대칭 점 산포 -->
+  <g fill="#141414">
+    <circle cx="180" cy="560" r="20"/>
+    <circle cx="240" cy="640" r="9"/>
+    <circle cx="150" cy="700" r="13"/>
+    <circle cx="820" cy="690" r="16"/>
+    <circle cx="760" cy="600" r="7"/>
+    <circle cx="690" cy="780" r="11"/>
+    <circle cx="430" cy="800" r="14"/>
+    <circle cx="350" cy="730" r="8"/>
+  </g>
+
+  <!-- 솔리드 형상 (하단 우측 삼각형) -->
+  <path d="M 700 880 L 880 760 L 880 880 Z" fill="#141414"/>
+  <!-- 상단 좌측 블루 사각 -->
+  <rect x="120" y="150" width="90" height="64" fill="#1f49b6" transform="rotate(-12 165 182)"/>
+  <!-- 오커 액센트 -->
+  <path d="M 250 470 q 40 -60 96 -28 l -18 70 Z" fill="#e0a92e"/>
+
+  <!-- 추상 글리프 (좌하단) -->
+  <g fill="#141414">
+    <rect x="110" y="820" width="70" height="16"/>
+    <rect x="110" y="848" width="44" height="16"/>
+    <rect x="168" y="848" width="16" height="40"/>
+    <rect x="210" y="820" width="16" height="68"/>
+  </g>
+</svg>
