@@ -143,10 +143,6 @@
       anchorObj.quaternion.copy(detail.rotation);
       const s = detail.scale * SCALE_MULT;
       anchorObj.scale.set(s, s, s);
-      // 엔진이 주는 타깃 실제 종횡비로 평면을 맞춤(하드코딩 대신) → 카드에 딱 맞춤
-      const sw = detail.scaledWidth || 1, sh = detail.scaledHeight || 1;
-      if (mesh) mesh.scale.set(sw, sh, 1);
-      uniforms.uAspect.value = sw / sh;
     };
     const lose = ({detail}) => {
       if (detail.name !== TARGET_NAME || !anchorObj) return;
@@ -159,8 +155,15 @@
         const { scene } = XR8.Threejs.xrScene();
         const mat = new THREE.ShaderMaterial({ vertexShader:vert, fragmentShader:frag, uniforms,
           transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, depthTest:false });
-        mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);  // 종횡비는 추적 시 detail.scaledWidth/Height로 맞춤
+        mesh = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat);
         mesh.rotation.x = EXTRA_ROT_X;            // 이미지타깃은 detail.rotation이 평면을 정렬 → 기본 0
+        // 평면 비율 = '전체 인쇄 이미지'(originalWidth/Height). 엔진의 detail.scaledWidth/Height는
+        // CLI가 잘라낸 '크롭 추적영역' 비율이라 그대로 쓰면 찌그러짐(원본 정사각인데 크롭은 768×1024).
+        // 원본이 정사각 + 크롭이 중앙정렬이라 정사각 평면이면 회전/크롭과 무관하게 전체를 정확히 덮음.
+        const tp = (targetJson && targetJson.properties) || {};
+        const aspect = (tp.originalWidth || 1) / (tp.originalHeight || 1);   // 1.0 = 정사각
+        mesh.scale.set(aspect >= 1 ? 1 : aspect, aspect >= 1 ? 1 / aspect : 1, 1);
+        uniforms.uAspect.value = aspect;
         anchorObj = new THREE.Group();            // detail(위치/회전/스케일)을 받는 앵커
         anchorObj.add(mesh);
         anchorObj.visible = false;
