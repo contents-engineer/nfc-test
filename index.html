@@ -50,7 +50,7 @@
     <div class="kicker">8th Wall · SLAM · NFC</div>
     <h1>문 양 리 빌</h1>
     <p>카드를 비추면 문양에 빛이 용접된 듯 붙어 퍼집니다.<br/><b>인쇄물</b>이 가장 안정적입니다.</p>
-    <a class="link" href="./assets/munyang.png" target="_blank" rel="noopener">① 타깃 이미지(문양) 열기 → 인쇄 권장</a>
+    <a class="link" href="./assets/journey_card.png" target="_blank" rel="noopener">① 타깃 이미지(카드) 열기 → 인쇄 권장</a>
     <button class="btn primary" id="startBtn">✦ ② 카메라 시작</button>
   </div>
 
@@ -90,11 +90,11 @@
 
   <script>
   // ===== 보정 상수 (폰에서 틀어지면 여기만 조정) =====
-  const PLANE_ASPECT = 1.0;     // 타깃 height/width (munyang 정사각=1.0)
+  const PLANE_ASPECT = 1.0;     // (미사용) 평면 비율은 타깃 JSON originalWidth/Height에서 자동
   const EXTRA_ROT_X  = 0.0;     // 평면이 카드에 수직이면 -Math.PI/2 등으로
   const SCALE_MULT   = 1.0;     // 글로우가 카드보다 크/작으면 0.9~1.1 조정
   const REVEAL_SEC   = 2.2;
-  const TARGET_NAME  = 'munyang';
+  const TARGET_NAME  = 'journey';
 
   const $ = (s) => document.querySelector(s);
   const showError = (m) => { const e=$('#error'); e.textContent=m; e.classList.remove('hidden'); };
@@ -168,7 +168,7 @@
         anchorObj.add(mesh);
         anchorObj.visible = false;
         scene.add(anchorObj);
-        new THREE.TextureLoader().load('./assets/munyang.png', (tex)=>{ uniforms.uTex.value=tex; uniforms.uHasTex.value=1; });
+        new THREE.TextureLoader().load('./assets/journey_card.png', (tex)=>{ uniforms.uTex.value=tex; uniforms.uHasTex.value=1; });
         XR8.XrController.configure({ imageTargetData: [targetJson] });
         $('#intro').classList.add('hidden');
         $('#status').classList.remove('hidden');
@@ -221,7 +221,7 @@
 
   $('#startBtn').addEventListener('click', async () => {
     try {
-      if (!targetJson) targetJson = await (await fetch('./image-targets/munyang.json')).json();
+      if (!targetJson) targetJson = await (await fetch('./image-targets/journey.json')).json();
       whenReady(startAR);
     } catch(e){ showError('타깃 로드 실패: ' + (e && e.message ? e.message : e)); }
   });

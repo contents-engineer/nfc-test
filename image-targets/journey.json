@@ -1,0 +1,23 @@
+{
+  "imagePath": "image-targets/journey_luminance.png",
+  "metadata": null,
+  "name": "journey",
+  "type": "PLANAR",
+  "properties": {
+    "top": 0,
+    "left": 0,
+    "width": 480,
+    "height": 640,
+    "isRotated": false,
+    "originalWidth": 480,
+    "originalHeight": 640
+  },
+  "resources": {
+    "originalImage": "journey_original.png",
+    "croppedImage": "journey_cropped.png",
+    "thumbnailImage": "journey_thumbnail.png",
+    "luminanceImage": "journey_luminance.png"
+  },
+  "created": 1781843463849,
+  "updated": 1781843463849
+}
